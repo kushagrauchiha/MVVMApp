@@ -9,7 +9,7 @@ import Foundation
 
 class MainViewModel {
     
-        var cellDataSource: Observable<[Movie]> = Observable(nil)
+        var cellDataSource: Observable<[MovieTableCellViewModel]> = Observable(nil)
         var isLoading: Observable<Bool> = Observable(false)
         var dataSource: TrendingMovieModel?
 //        var movies: Observable<[MovieTableCellViewModel]> = Observable(nil)
@@ -41,13 +41,18 @@ class MainViewModel {
             }
         }
     }
-            func mapCellData() {
-                self.cellDataSource.value = self.dataSource?.results ?? []
-            }
+    
+//    private func mapMovieData() {
+//        movies.value = self.dataSource?.results.compactMap({MovieTableCellViewModel(movie: $0)})
+//    }
+    
+    func mapCellData() {
+        self.cellDataSource.value = self.dataSource?.results.compactMap({MovieTableCellViewModel(movie: $0)})
+    }
             
     func getMovieTitle(_ movie: Movie) -> String {
         return movie.title ?? movie.name ?? ""
     }
-        }
+}
     
 

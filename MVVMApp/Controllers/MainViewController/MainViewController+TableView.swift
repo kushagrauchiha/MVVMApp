@@ -19,7 +19,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func registerCells() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(MainMovieCell.register(), forCellReuseIdentifier: MainMovieCell.identifier)
     }
     
     func reloadTableView() {
@@ -37,11 +37,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let movieData = cellDataSource[indexPath.row]
-        cell.textLabel?.text = self.viewModel.getMovieTitle(movieData)
-        return cell
-    }
-    
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MainMovieCell.identifier, for: indexPath) as? MainMovieCell else {
+                return UITableViewCell()
+            }
+            cell.setupCell(viewModel: cellDataSource[indexPath.row])
+            cell.selectionStyle = .none
+            return cell
+        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            150
+        }
     
 }
